@@ -16,6 +16,8 @@ import xlrd
 import xlwt
 import os
 import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 class Extraction:
     """ Extracts data from several files to a new one.
@@ -63,7 +65,10 @@ class Extraction:
         """
         # open a new workbook to write the result there
         workbook = xlwt.Workbook()
-        write_sheet = workbook.add_sheet('Results')
+        write_sheet = workbook.add_sheet('Results', cell_overwrite_ok=True)
+        # index which increases depending on the number of writes
+        # (in order to avoid double writes)
+        max_index = 0
         # search a sheet by row (usually names are there).
         for sheet in self.file_contents:
             for row_index in range(sheet.nrows):
@@ -74,13 +79,18 @@ class Extraction:
                     if key not in str(cell.value):
                         continue
                     else:
-                        self._write_row(row, row_index, write_sheet)
+                        write_index = self._update_write_index(max_index, row_index)
+                        self._write_row(row, write_index, write_sheet)
         workbook.save(self.dest_file)
 
     def _write_row(self, row, row_index, write_sheet):
         """ This method writes a row of data to the new excel file"""
         for col_index, cell in enumerate(row):
             write_sheet.write(row_index, col_index, str(cell.value))
+
+    def _update_write_index(self, max_index, row_index):
+        max_index += row_index
+        return max_index
 
     def extract_routes(self):
         pass
