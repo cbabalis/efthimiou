@@ -59,7 +59,7 @@ class Extraction:
         # and append it to the list of files
         self.file_contents.append(worksheet)
 
-    def process_file(self, key="ACC ON"):
+    def process_file(self, key="Attiki Odos"):
         """ This method processes a file and extracts only the data
         the user is interested for.
         """
@@ -105,11 +105,3 @@ class Extraction:
         be written.
         """
         pass
-
-def main():
-    src = str(sys.argv[1])
-    dest = str(sys.argv[2])
-    Extraction(src, dest)
-
-if __name__ == "__main__":
-    main()
