@@ -23,16 +23,14 @@ class Extraction:
     """ Extracts data from several files to a new one.
     """
 
-    def __init__(self, src_folder, dest_file):
+    def __init__(self, src_folder, dest_file, value):
         self.file_contents = []
         self.src_folder = src_folder
         self.dest_file = dest_file
         # read the file
         self.read_folder(src_folder)
-        # process data
-        self.process_file()
-        # and write data to a new file
-        self.write_output(dest_file)
+        # process data and write data to a new file
+        self.process_file(value)
 
     def read_folder(self, folder=""):
         """ This method reads a folder which contains files as input.
@@ -59,7 +57,7 @@ class Extraction:
         # and append it to the list of files
         self.file_contents.append(worksheet)
 
-    def process_file(self, key="Attiki Odos"):
+    def process_file(self, value):
         """ This method processes a file and extracts only the data
         the user is interested for.
         """
@@ -76,7 +74,7 @@ class Extraction:
                 # If the value is found, then
                 # save all row
                 for col_index, cell in enumerate(row):
-                    if key not in str(cell.value):
+                    if value not in str(cell.value):
                         continue
                     else:
                         write_index = self._update_write_index(max_index, row_index)
@@ -91,17 +89,3 @@ class Extraction:
     def _update_write_index(self, max_index, row_index):
         max_index += row_index
         return max_index
-
-    def extract_routes(self):
-        pass
-
-    def extract_parts_of_interest(self):
-        pass
-
-    def write_output(self, write_filename=""):
-        """ This method writes the contents to a new file.
-
-        :param str write_filename: the filename of the file to
-        be written.
-        """
-        pass
