@@ -1,0 +1,20 @@
+This branch is about a "query-like" kind of support instead of value.
+So, the program should address the following expressions:
+
+expr = X and (Y or Z) and (NOT W)
+
+Algorithm is as follows:
+
+Examine_expr(expr):
+    search for last seen left parenthesis: left = expr.split("(")
+    search for last seen right parenthesis: right = expr.split(")")
+    join the two of them: mini_expr = left + right
+
+    if mini_expr:
+        examine_expr(mini_expr)
+
+    analyze_expr(mini_expr)
+
+analyze_expr:
+    #TODO here
+    analyze for or, and, etc
