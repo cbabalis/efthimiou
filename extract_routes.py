@@ -57,6 +57,15 @@ class Extraction:
         # and append it to the list of files
         self.file_contents.append(worksheet)
 
+    def process_expression(self, expr):
+        """ This method processes an expression from file to file."""
+        # take the innermost left parenthesis content.
+        # take the innermost right parenthesis content.
+        # search for "and", "or", "not" keywords in it.
+        # and return the results inside an excel, as well as
+        # the (simplified) expression, respectively
+        pass
+
     def process_file(self, value):
         """ This method processes a file and extracts only the data
         the user is interested for.
