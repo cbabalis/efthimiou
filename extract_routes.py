@@ -57,14 +57,53 @@ class Extraction:
         # and append it to the list of files
         self.file_contents.append(worksheet)
 
-    def process_expression(self, expr):
-        """ This method processes an expression from file to file."""
-        # take the innermost left parenthesis content.
-        # take the innermost right parenthesis content.
-        # search for "and", "or", "not" keywords in it.
-        # and return the results inside an excel, as well as
-        # the (simplified) expression, respectively
-        pass
+    def process_expression(self, expr, myfile):
+        """
+        This method processes an expression from file to file.
+            Algorithm:
+            While expression has parentheses, then
+                analyze the inside-the-parentheses expression recursively
+                return a new file
+                modify expression
+            If expression.contains(AND):
+                x = process_value(expression.left_side, file)
+                y = process_value(expression.right_side, x)
+                return y
+            elif expression.contains(OR):
+                x = process_value(expression.left_side, file)
+                y = process_value(expression.right_side, file)
+                z = merge(x, y)
+                return z
+            elif expression.contains(NOT):
+                x = process_value(expression, file)
+                return x
+        """
+        # get rid of complex expressions with parenthesis
+        if (expr.has("(")):
+            simple_expr = self._get_inner_expression(expr)
+
+            if "AND" in simple_expr:
+                custom_file = self._AND_expr(simple_expr, myfile)
+            if "OR" in simple_expr:
+                custom_file = self._OR_expr(simple_expr, myfile) #TODO write this.
+            if "NOT" in simple_expr:
+                custom_file = self._NOT_expr(simple_expr, myfile) #TODO write this.
+
+    def _get_inner_expression(self, expr):
+        """ This method extracts the innermost expression of
+        parentheses """
+        left_inner = expr.split("(")[-1]
+        right_inner = expr.split(")")[0]
+        simple_expr = left_inner + right_inner
+        return simple_expr
+
+    def _AND_expr(self, expr, f):
+        left = simple_expr.split("AND")[0]
+        right = simple_expr.split("AND")[-1]
+
+        custom_file = self.process_file(left, f)
+        custom_file = self.process_file(right, custom_file)
+        return custom_file
 
     def process_file(self, value):
         """ This method processes a file and extracts only the data
