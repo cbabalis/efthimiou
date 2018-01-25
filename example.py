@@ -1,6 +1,10 @@
 import sys
 from extract_routes import Extraction
 
+""" This is used as follows:
+
+python example.py /home/test/directory_full_of_xls test.xls ACC_ON
+"""
 
 def main():
     src = str(sys.argv[1])

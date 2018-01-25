@@ -7,7 +7,7 @@ In particular, two scenarios are being examined. Given a file of GPS points:
     - extract all routes a truck has been done.
 
     To run this module as an independent script, type:
-    > python extract_routes.py ~/my_folder output.csv
+    > python extract_routes.py ~/my_folder output.csv ACC_ON
 """
 
 
